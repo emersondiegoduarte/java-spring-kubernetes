@@ -3,7 +3,6 @@ package com.user.controller;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
@@ -17,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.user.dto.UserDTO;
 import com.user.exception.UserNotFoundException;
 import com.user.service.UserService;
+
+import dto.UserDTO;
 
 @RestController
 @RequestMapping("/users")
@@ -80,10 +80,10 @@ public class UserController {
 		return userService.getUsersByName(nome);
 	}
 	
-	@GetMapping("/{id}")
-	public UserDTO getUserById(@PathVariable(name = "id", required = true) Long id) {
-		return userService.findById(id);
-	}
+	/*
+	 * @GetMapping("/{id}") public UserDTO getUserById(@PathVariable(name = "id",
+	 * required = true) Long id) { return userService.findById(id); }
+	 */
 	
 	@PostMapping
 	public UserDTO inserir(@RequestBody UserDTO userDTO) {

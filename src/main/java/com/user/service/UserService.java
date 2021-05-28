@@ -7,9 +7,12 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.user.dto.UserDTO;
+import com.user.dto.DTOConverter;
 import com.user.entity.User;
 import com.user.repository.UserRepository;
+
+import dto.UserDTO;
+import exceptions.UserNotFoundException;
 
 @Service
 public class UserService {
@@ -18,49 +21,49 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	public UserDTO store(UserDTO userDTO) {
-		User user = User.convert(userDTO);
+		User user = DTOConverter.convertDTO(userDTO);
 		user = userRepository.save(user);
-		return UserDTO.convert(user);
+		return DTOConverter.convert(user);
 	}
 	
 	public List<UserDTO> getAllUsers(){
 		List<User> usuarios = userRepository.findAll();
 		return usuarios.stream()
-		.map(UserDTO::convert)
+		.map(DTOConverter::convert)
 		.collect(Collectors.toList());
 	}
 	
 	public List<UserDTO> getUsersByName(String nome){
 		List<User> usuarios = userRepository.findByNomeContaining(nome);
 		return usuarios.stream()
-		.map(UserDTO::convert)
+		.map(DTOConverter::convert)
 		.collect(Collectors.toList());
 	}
 	
 	public UserDTO findByCpf(String cpf) {
 		Optional<User> user = userRepository.findByCpf(cpf);
 		if(user.isPresent()) {
-			return UserDTO.convert(user.get());
+			return DTOConverter.convert(user.get());
 		}
-		return null;
+		throw new UserNotFoundException();
 	}
 	
 	public UserDTO findById(Long id) {
 		Optional<User> user = userRepository.findById(id);
 		if(user.isPresent()) {
-			return UserDTO.convert(user.get());
+			return DTOConverter.convert(user.get());
 		}
-		return null;
+		throw new UserNotFoundException();
 	}
 	
 	public UserDTO delete(Long id) {
 		Optional<User> user = userRepository.findById(id);
 		if(user.isPresent()) {
 			userRepository.delete(user.get());
-			return UserDTO.convert(user.get());
+			return DTOConverter.convert(user.get());
 		}
 		
-		return null;
+		throw new UserNotFoundException();
 	}
 	
 	

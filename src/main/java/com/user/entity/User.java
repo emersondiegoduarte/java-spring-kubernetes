@@ -7,8 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.user.dto.UserDTO;
-
 @Entity(name = "user")
 public class User {
 
@@ -64,18 +62,6 @@ public class User {
 	}
 	public void setDataCadastro(LocalDateTime dataCadastro) {
 		this.dataCadastro = dataCadastro;
-	}
-	
-	public static User convert(UserDTO userDTO) {
-		User user =	new	User();
-		user.setNome(userDTO.getNome());
-		user.setEndereco(userDTO.getEndereco());
-		user.setCpf(userDTO.getCpf());
-		user.setEmail(userDTO.getEmail());
-		user.setTelefone(userDTO.getTelefone());
-		user.setDataCadastro(userDTO.getDataCadastro());
-		return	user;
-		
 	}
 	
 	
