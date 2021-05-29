@@ -1,7 +1,9 @@
 package com.user.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,9 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	public UserDTO store(UserDTO userDTO) {
+		userDTO.setKey(UUID.randomUUID().toString());
 		User user = DTOConverter.convertDTO(userDTO);
+		user.setDataCadastro(LocalDateTime.now());
 		user = userRepository.save(user);
 		return DTOConverter.convert(user);
 	}
@@ -60,6 +64,15 @@ public class UserService {
 		Optional<User> user = userRepository.findById(id);
 		if(user.isPresent()) {
 			userRepository.delete(user.get());
+			return DTOConverter.convert(user.get());
+		}
+		
+		throw new UserNotFoundException();
+	}
+
+	public UserDTO findByCpfAndKey(String cpf, String key) {
+		Optional<User> user = userRepository.findByCpfAndKey(cpf, key);
+		if(user.isPresent()) {
 			return DTOConverter.convert(user.get());
 		}
 		

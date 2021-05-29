@@ -69,9 +69,15 @@ public class UserController {
 //		return optional.orElse(null);
 //	}
 	
+	/*
+	 * @GetMapping("/{cpf}") public UserDTO getUserByCpf(@PathVariable(name = "cpf",
+	 * required = true) String cpf) { UserDTO user = userService.findByCpf(cpf);
+	 * return user; }
+	 */
+	
 	@GetMapping("/{cpf}")
-	public UserDTO getUserByCpf(@PathVariable(name = "cpf", required = true) String cpf) {
-		UserDTO user = userService.findByCpf(cpf);
+	public UserDTO getUserByCpfAndKey(@PathVariable(name = "cpf", required = true) String cpf, @RequestParam(name = "key", required = true) String key) {
+		UserDTO user = userService.findByCpfAndKey(cpf, key);
 		return user;
 	}
 	

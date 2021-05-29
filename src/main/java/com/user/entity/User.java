@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.aspectj.lang.annotation.Before;
+
 @Entity(name = "user")
 public class User {
 
@@ -19,6 +21,7 @@ public class User {
 	private String email;
 	private String telefone;
 	private LocalDateTime dataCadastro;
+	private String key;
 	
 	
 	public Long getId() {
@@ -63,6 +66,11 @@ public class User {
 	public void setDataCadastro(LocalDateTime dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
-	
+	public String getKey() {
+		return key;
+	}
+	public void setKey(String key) {
+		this.key = key;
+	}
 	
 }
